@@ -1,0 +1,4 @@
+<%= form_tag(check_valid_url_links_path, method: :get) do %>
+  <%= text_field_tag :url,  params[:url] ,placeholder: "url", class: "input form-control" %>
+  <%= submit_tag "Shorten", class: 'btn btn-default'%>
+<% end %>
