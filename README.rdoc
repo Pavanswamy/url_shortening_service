@@ -1,11 +1,10 @@
-== README
+== URL Shortning Service
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Sample Application for Url Shortening Service. which can the track the traffic of the url.
 
-Things you may want to cover:
+* Ruby version > 2 +
 
-* Ruby version
+* Rails version > 4 +
 
 * System dependencies
 
