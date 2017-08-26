@@ -1,4 +1,18 @@
-<%= form_tag(check_valid_url_links_path, method: :get) do %>
-  <%= text_field_tag :url,  params[:url] ,placeholder: "url", class: "input form-control" %>
-  <%= submit_tag "Shorten", class: 'btn btn-default'%>
-<% end %>
+<div class="form-group">
+  <div class="main-container form-control">
+    <%= form_tag(check_valid_url_links_path, method: :get) do %>
+      <%= text_field_tag :url, params[:url], placeholder: "Paste URL", class: "input form-control", id: "text" %>
+      <br>
+      <%= submit_tag "Shorten", class: 'short btn btn-default'%>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  $('input.short').click(function(e){
+    if ($('#text').val() == ""){
+      e.preventDefault();
+      alert('Please Enter Valid URL');
+    }
+  });
+</script>

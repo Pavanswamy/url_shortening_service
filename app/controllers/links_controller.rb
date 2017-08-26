@@ -2,7 +2,8 @@ class LinksController < ApplicationController
 
   def check_valid_url
     require 'open-uri'
-    return redirect_to root_path, notice: "already present" if Link.where(original_url: params[:url]).present?
+    return redirect_to root_path, 
+      notice: "Already Shorten before #{Link.where(original_url: params[:url]).}" if Link.where(original_url: params[:url]).present?
     url = open(params[:url]).status rescue nil
     if url.present? && url[0] = "200"
       su = generate_shorten_link
