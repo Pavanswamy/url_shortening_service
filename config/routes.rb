@@ -9,7 +9,11 @@ Rails.application.routes.draw do
 
   resources :links do
     collection do
-        get 'check_valid_url'
+      get 'check_valid_url'
+    end
+
+    member do
+      get 'link_visit_report'
     end
   end
 

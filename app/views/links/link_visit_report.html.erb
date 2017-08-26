@@ -1,25 +1,22 @@
-<p id="notice"><%= notice %></p>
-
+<div class="col-md-12"><hr/></div>
+  <div id="product-sales" class="col-md-12" style="max-height: 500px"></div>
 <div class="col-md-12"><hr/></div>
 
-  <% if @link.present? && @link_count.present? %>
-    <div id="product-sales" class="col-md-12" style="max-height: 500px"></div>
-    
-      <script type="text/javascript">
+<script type="text/javascript">
       $('#product-sales').highcharts({
         chart: {
           type: 'column'
         },
         title: {
-          text: 'Link Vist Count'
+          text: 'Product Wise Sales Report'
         },
         xAxis: {
-          type: 'Date',
-          max: 10 
+          type: 'category',
+          max: 9 
         },
         yAxis: {
           title: {
-            text: 'Count'
+            text: 'Total Products Sale'
           }
         },
         scrollbar: {
@@ -38,23 +35,16 @@
           pointFormat: '{series.name}: <b>{point.y}</b>'
         },
         series: [{
-          name: "Link Visit",
+          name: "Products Sold",
           colorByPoint: true,
           data: [
-            <% @link_count.each_with_index do |link, index| %>
+            <% [1..100].each_with_index do |product, index| %>
               {
-                name: "<%= @link.original_url %>",
-                y: <%= link.count %>,
-                x: <%= link.created_at.strftime("%d/%m/%Y") %>
+                name: "<%= product %>",
+                y: <%= index %>,
               },
             <% end %>
           ]
         }]
       });
     </script>
-
-    <% else%>
-    <p> no traffic generated </p>
-  <% end %>
-
-<div class="col-md-12"><hr/></div>
