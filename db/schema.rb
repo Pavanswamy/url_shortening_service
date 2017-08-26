@@ -11,12 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825110155) do
+ActiveRecord::Schema.define(version: 20170825165007) do
+
+  create_table "link_visits", force: :cascade do |t|
+    t.integer  "count",      limit: 4
+    t.integer  "link_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
   create_table "links", force: :cascade do |t|
     t.string   "original_url", limit: 255
     t.string   "shorten_url",  limit: 255
-    t.integer  "count",        limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
