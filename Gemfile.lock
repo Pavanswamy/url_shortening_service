@@ -85,6 +85,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (2.16.0)
     rack (1.6.8)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -173,6 +174,7 @@ DEPENDENCIES
   mysql2 (~> 0.3.11)
   pg
   pry
+  puma (~> 2.12)
   rails (= 4.2.5)
   rails_12factor
   sass-rails (~> 5.0)
@@ -186,4 +188,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.15.3
+   1.15.4
