@@ -6,3 +6,13 @@ development:
   pool: 5
   username: root
   password: root
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  reconnect: false
+  database: url_shortner
+  pool: 5
+  username: <%= ENV['username'] %>
+  password: <%= ENV['password'] %>
+
