@@ -23,8 +23,9 @@ ActiveRecord::Schema.define(version: 20170825165007) do
   create_table "links", force: :cascade do |t|
     t.string   "original_url", limit: 255
     t.string   "shorten_url",  limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.boolean  "is_active",                default: true
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
 end

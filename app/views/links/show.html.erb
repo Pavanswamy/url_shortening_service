@@ -1,60 +1,96 @@
 <p id="notice"><%= notice %></p>
 
-<div class="col-md-12"><hr/></div>
+<div class="container text-center" id="head-text">
+  <h1> URL Tracking Report </h1>
+  <br>
+  <% if @link.present? %>
+    <% total_clicks =  @link_count.sum(:count) %>
+    <table style="width:100%" class="table-responsive">
+    <tr>
+      <td>Original URL</td>
+      <td><%= link_to @link.original_url, @link.original_url, target: "blank" %></td> 
+    </tr>
+    <tr>
+      <td>Shorten URL</td>
+      <td><%= link_to "#{$BASE_URL}/#{@link.shorten_url}", "#{$BASE_URL}/#{@link.shorten_url}", 
+        target: "blank" %></td> 
+    </tr>
+    <tr>
+      <td>Total Clicks:</td>
+      <td><%= total_clicks rescue nil %></td>
+    </tr>
+    </table>
+  <% else %>
+    <p> No URL Found </p>
+  <% end %>
+</div>
 
+<div class="col-md-12"><hr/></div>
   <% if @link.present? && @link_count.present? %>
-    <div id="product-sales" class="col-md-12" style="max-height: 500px"></div>
-    
+    <div id="link-count" class="col-md-12" style="max-height: 500px"></div>
       <script type="text/javascript">
-      $('#product-sales').highcharts({
+      $('#link-count').highcharts({
         chart: {
-          type: 'column'
+          zoomType: 'x'
         },
         title: {
-          text: 'Link Vist Count'
+          text: 'URL Clicks'
         },
         xAxis: {
-          type: 'Date',
-          max: 10 
+          type: 'datetime',
+          title: {
+            text: 'Date & Time'
+          }
+        },
+        subtitle: {
+          text: document.ontouchstart === undefined ?
+            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
         },
         yAxis: {
           title: {
-            text: 'Count'
+            text: 'Click Count'
           }
         },
         scrollbar: {
           enabled: true
         },
         plotOptions: {
-          series: {
-            borderWidth: 0,
-            dataLabels: {
-              enabled: true,
-              format: '{point.y}'
-            }
+          area: {
+            fillColor: {
+              linearGradient: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1
+              },
+              stops: [
+                [0, Highcharts.getOptions().colors[0]],
+                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+              ]
+            },
+            marker: {
+              radius: 2
+            },
+            lineWidth: 1,
+            states: {
+              hover: {
+                lineWidth: 1
+              }
+            },
+            threshold: null
           }
         },
-        tooltip: {
-          pointFormat: '{series.name}: <b>{point.y}</b>'
-        },
         series: [{
-          name: "Link Visit",
-          colorByPoint: true,
-          data: [
-            <% @link_count.each_with_index do |link, index| %>
-              {
-                name: "<%= @link.original_url %>",
-                y: <%= link.count %>,
-                x: <%= link.created_at.strftime("%d/%m/%Y") %>
-              },
+          name: 'Clicks Count',
+          data:  [
+            <% @link_count.each do |link| %>
+              [Date.UTC(<%= link.created_at.strftime("%Y,%m - 1,%d") %>), <%= link.count %>],
             <% end %>
           ]
-        }]
+           }]
       });
     </script>
-
-    <% else%>
-    <p> no traffic generated </p>
+  <% else%>
+    <p class="text-center" style = "color: white;"> <b> No Traffic Generated </b> </p>
   <% end %>
-
 <div class="col-md-12"><hr/></div>

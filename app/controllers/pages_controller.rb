@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+
   def show
     url = Link.where(shorten_url: params[:key]).first
     if url.present?
@@ -13,7 +14,8 @@ class PagesController < ApplicationController
       original_url = url.original_url
       redirect_to original_url
     else
-      redirect_to root_path, notice: "url broken"
+      redirect_to root_path, notice: "URL Not Found"
     end
   end
+
 end

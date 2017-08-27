@@ -2,37 +2,47 @@ class LinksController < ApplicationController
 
   def check_valid_url
     require 'open-uri'
-    return redirect_to root_path, notice: "already present" if Link.where(original_url: params[:url]).present?
     url = open(params[:url]).status rescue nil
-    if url.present? && url[0] = "200"
-      su = generate_shorten_link
-      link = Link.create(original_url: params[:url], shorten_url: su)
-      redirect_to root_path, alert: "shorten_url: localhost:3000/#{link.shorten_url}"
+    if !(url.present? && url[0] = "200")
+      @msg = { status: 404, message: "Unable to shorten that link. It is not a valid url." }
+    elsif check_presence_of_url
+      @msg = { status: 412, message: "Already shorten before: #{$BASE_URL}/#{check_presence_of_url.shorten_url}",
+               link: "#{$BASE_URL}/links/#{check_presence_of_url.shorten_url}" }
     else
-      redirect_to root_path, alert: "Unable to shorten that link. It is not a valid url."
+      key = Link.generate_key
+      link = Link.new(original_url: params[:url], shorten_url: key)
+      @msg = { status: 200, message: "Shorten URL: #{$BASE_URL}/#{link.shorten_url}",
+               link: "#{$BASE_URL}/links/#{link.shorten_url}" } if link.save
+    end
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js
     end
   end
 
- def show
+  def check_presence_of_url
+    link_presence = Link.where(original_url: params[:url], is_active: true).first rescue nil
+    if link_presence
+      return link_presence
+    else
+      return false
+    end
+  end
+
+  def show
     key = params[:id]
     @link = Link.where(shorten_url: key).first
     if @link.present?
       @link_count = @link.link_visits
     else
+      redirect_to root_path, alert: "Not Found"
     end
   end
 
   protected
 
-  def generate_shorten_link
-    rand_number = rand(4..7)
-    rand(36**rand_number).to_s(36)
-  end
-
-  private
-
-  # Never trust parameters from the scary internet, only allow the white list through.
   def link_params
-    params.fetch(:link, {})
+    params.require(:link).permit(:url)
   end
+
 end

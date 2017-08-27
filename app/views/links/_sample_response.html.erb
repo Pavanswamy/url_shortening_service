@@ -1,0 +1,4 @@
+<p><%= @msg[:message] %></p>
+<% unless @msg[:status] == 404 %>
+<p>Moniter Your Traffic Here: <%= link_to "click here", @msg[:link], target: "blank" %></p>
+<% end %>
