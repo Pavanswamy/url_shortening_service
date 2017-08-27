@@ -1,6 +1,11 @@
 $("#rsp-msg").show();
 
-$("#text").val("");
+<% unless @msg[:status] == 404 %>
+  $("#text").val("");
+<% end %>
 
 $("div#rsp-msg").empty()
- 	.append('<%= escape_javascript(render(:partial => "sample_response")) %>')
+ 	.append('<%= escape_javascript(render(:partial => "sample_response")) %>');
+
+$("input.short").attr("disabled", false);
+

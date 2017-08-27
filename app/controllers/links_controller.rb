@@ -6,11 +6,13 @@ class LinksController < ApplicationController
     if !(url.present? && url[0] = "200")
       @msg = { status: 404, message: "Unable to shorten that link. It is not a valid url." }
     elsif check_presence_of_url
-      @msg = { status: 412, message: "Already shorten before: #{$BASE_URL}/#{check_presence_of_url.shorten_url}"}
+      @msg = { status: 412, message: "Already shorten before: #{$BASE_URL}/#{check_presence_of_url.shorten_url}",
+               link: "#{$BASE_URL}/links/#{check_presence_of_url.shorten_url}" }
     else
       su = generate_shorten_link
       link = Link.create(original_url: params[:url], shorten_url: su)
-      @msg = { status: 200, message: "Shorten URL: #{$BASE_URL}/#{link.shorten_url}"}
+      @msg = { status: 200, message: "Shorten URL: #{$BASE_URL}/#{link.shorten_url}",
+               link: " #{$BASE_URL}/links/#{link.shorten_url}" }
     end
     respond_to do |format|
       format.html { redirect_to root_path }
