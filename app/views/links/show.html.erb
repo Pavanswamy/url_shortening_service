@@ -81,7 +81,6 @@
           }
         },
         series: [{
-          type: 'area',
           name: 'Clicks Count',
           data:  [
             <% @link_count.each do |link| %>
@@ -92,6 +91,6 @@
       });
     </script>
   <% else%>
-    <p> No Traffic Generated </p>
+    <p class="text-center" style = "color: white;"> <b> No Traffic Generated </b> </p>
   <% end %>
 <div class="col-md-12"><hr/></div>

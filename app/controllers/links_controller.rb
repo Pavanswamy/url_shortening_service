@@ -9,17 +9,16 @@ class LinksController < ApplicationController
       @msg = { status: 412, message: "Already shorten before: #{$BASE_URL}/#{check_presence_of_url.shorten_url}",
                link: "#{$BASE_URL}/links/#{check_presence_of_url.shorten_url}" }
     else
-      su = generate_shorten_link
-      link = Link.create(original_url: params[:url], shorten_url: su)
+      key = Link.generate_key
+      link = Link.new(original_url: params[:url], shorten_url: key)
       @msg = { status: 200, message: "Shorten URL: #{$BASE_URL}/#{link.shorten_url}",
-               link: " #{$BASE_URL}/links/#{link.shorten_url}" }
+               link: "#{$BASE_URL}/links/#{link.shorten_url}" } if link.save
     end
     respond_to do |format|
       format.html { redirect_to root_path }
       format.js
     end
   end
-
 
   def check_presence_of_url
     link_presence = Link.where(original_url: params[:url]).first rescue nil
@@ -41,15 +40,8 @@ class LinksController < ApplicationController
 
   protected
 
-  def generate_shorten_link
-    rand_number = rand(4..7)
-    rand(36**rand_number).to_s(36)
-  end
-
-  private
-
-  # Never trust parameters from the scary internet, only allow the white list through.
   def link_params
-    params.fetch(:link, {})
+    params.require(:link).permit(:url)
   end
+
 end
