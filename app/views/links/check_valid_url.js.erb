@@ -1,0 +1,6 @@
+$("#rsp-msg").show();
+
+$("#text").val("");
+
+$("div#rsp-msg").empty()
+ 	.append('<%= escape_javascript(render(:partial => "sample_response")) %>')

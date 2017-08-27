@@ -1,12 +1,17 @@
-<div class="form-group">
-  <div class="main-container form-control">
-    <%= form_tag(check_valid_url_links_path, method: :get) do %>
-      <%= text_field_tag :url, params[:url], placeholder: "Paste URL", class: "input form-control", id: "text" %>
-      <br>
-      <%= submit_tag "Shorten", class: 'short btn btn-default'%>
-    <% end %>
-  </div>
+<div class="well">
+  <%= form_tag(check_valid_url_links_path, method: :get, remote: true) do %>
+    <%= text_field_tag :url, params[:url], placeholder: "Paste URL Here", class: "input form-control", id: "text" %>
+    <br>
+    <%= submit_tag "Shorten", class: 'short btn btn-default'%>
+  <% end %>
 </div>
+<br>
+<div class="container">
+  <div class="col-md-2"></div>
+  <div id="rsp-msg" class="well col-md-8"> </div>
+  <div class="col-md-2"></div>
+</div>
+
 
 <script>
   $('input.short').click(function(e){
@@ -14,5 +19,12 @@
       e.preventDefault();
       alert('Please Enter Valid URL');
     }
+  });
+
+  $("#rsp-msg").hide();
+
+  $( document ).ajaxStart(function() {
+    $("div#rsp-msg").show();
+    $("div#rsp-msg").text("Please Wait While Generating The Link ...");
   });
 </script>

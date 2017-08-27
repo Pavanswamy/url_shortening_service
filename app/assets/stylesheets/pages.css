@@ -1,14 +1,8 @@
-.main {
-  color: #fff;
- }
-
-.main-container {
-  margin: auto;
-  width: 70%;
-  border: 3px ;
-  padding: 100px;
+div.well{
+  background-color: #fff;
 }
 
-form {
-  margin: -35px;
+.main{
+  padding-top: 50px;
 }
+
