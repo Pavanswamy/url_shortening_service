@@ -6,22 +6,9 @@ A Sample Application for Url Shortening Service. which can the track the traffic
 
 * Rails version > 4 +
 
-* System dependencies
-
-* Configuration
-
 * Database creation
+  > rake db:create
+  > rake db:migrate  
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Services (job queues)
+  Integrate any library for backgroud Jobs for disable dummy links(i..e., No Trafic generated) links
