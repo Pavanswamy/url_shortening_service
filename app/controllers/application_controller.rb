@@ -2,5 +2,5 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  $BASE_URL = "https://url-shortning-service.herokuapp.com/"
+  $BASE_URL = "https://url-shortning-service.herokuapp.com"
 end
