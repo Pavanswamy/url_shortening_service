@@ -12,3 +12,5 @@ A Sample Application for Url Shortening Service. which can the track the traffic
 
 * Services (job queues)
   Integrate any library for backgroud Jobs for disable dummy links(i..e., No Trafic generated) links
+
+* You can View the app here https://url-shortning-service.herokuapp.com/
