@@ -21,7 +21,7 @@ class LinksController < ApplicationController
   end
 
   def check_presence_of_url
-    link_presence = Link.where(original_url: params[:url]).first rescue nil
+    link_presence = Link.where(original_url: params[:url], is_active: true).first rescue nil
     if link_presence
       return link_presence
     else
@@ -35,6 +35,7 @@ class LinksController < ApplicationController
     if @link.present?
       @link_count = @link.link_visits
     else
+      redirect_to root_path, alert: "Not Found"
     end
   end
 
